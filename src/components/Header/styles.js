@@ -1,14 +1,47 @@
-import styled from 'styled-components';
+import { useContext } from 'react';
+import styled, { css } from 'styled-components';
+import AppContext from '../../contexts/AppProvider/AppContext';
 
 const StyledHeader = styled.div`
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 30px;
+	padding: 30px 20px;
 	background-color: #0084d6;
 	color: white;
 	font-weight: bold;
+
+	${() => {
+		const { user } = useContext(AppContext);
+
+		return css`
+			padding: ${ user ? '20px' : '30px 20px' };
+		`;
+	}}
+
+	& .links-div {
+		display: flex;
+		align-items: center;
+	}
+
+	& .links-div .user-profile {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		background-color: #005b93;
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 10px;
+		cursor: pointer;
+	}
+
+	& .links-div .user-profile:hover {
+		background-color: #0074b2;
+		text-decoration: none;
+	}
 
 	& a {
 		text-decoration: none;

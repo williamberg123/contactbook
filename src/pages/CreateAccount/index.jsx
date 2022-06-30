@@ -22,6 +22,10 @@ export default function CreateAccount() {
 						Password
 						<Input type="password" placeholder="digite sua senha" />
 					</StyledLabel>
+					<StyledLabel>
+						Phone
+						<Input type="tel" placeholder="digite um número de telefone" />
+					</StyledLabel>
 
 					<Input type="submit">Entrar</Input>
 				</Form>

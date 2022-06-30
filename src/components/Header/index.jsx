@@ -16,8 +16,9 @@ export default function Header() {
 						<Link to="/createaccount">Cadastrar</Link>
 				</RenderIf>
 				<RenderIf isTrue={ !!user }>
-					<Link to="/createcontact">Criar contato</Link>
-					<Link to="/logout">Sair</Link>
+					<Link to="/newcontact">Criar contato</Link>
+					{/* <Link to="/logout">Sair</Link> */}
+					<Link to="/profile" className="user-profile">{user?.userEmail[0].toUpperCase()}</Link>
 				</RenderIf>
 			</div>
 		</StyledHeader>

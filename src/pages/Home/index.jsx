@@ -1,5 +1,12 @@
+import Header from '../../components/Header';
+import PageTitle from '../../components/PageTitle';
+import StyledHome from './styles';
+
 export default function Home() {
 	return (
-		<h1>Home</h1>
+		<StyledHome>
+			<Header />
+			<PageTitle />
+		</StyledHome>
 	);
 }

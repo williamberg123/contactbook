@@ -17,6 +17,8 @@ export default function AppProvider({ children }) {
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
 
+	const auth = getAuth(firebaseApp);
+
 	const signIn = useCallback(async (e) => {
 		e.preventDefault();
 
@@ -32,8 +34,6 @@ export default function AppProvider({ children }) {
 
 		const email = emailRef.current.value;
 		const password = passwordRef.current.value;
-
-		const auth = getAuth(firebaseApp);
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
@@ -56,7 +56,7 @@ export default function AppProvider({ children }) {
 			});
 	}, [emailRef, passwordRef]);
 
-	const createAccount = useCallback(async (e) => {
+	const registerAccount = useCallback(async (e) => {
 		e.preventDefault();
 
 		if (!emailValidator.validate(emailRef.current.value)) {
@@ -71,8 +71,6 @@ export default function AppProvider({ children }) {
 
 		const email = emailRef.current.value;
 		const password = passwordRef.current.value;
-
-		const auth = getAuth(firebaseApp);
 
 		createUserWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
@@ -104,7 +102,7 @@ export default function AppProvider({ children }) {
 	}, []);
 
 	const memoizedContext = useMemo(() => ({
-		user, userActions, signIn, createAccount, emailRef, passwordRef,
+		user, userActions, signIn, registerAccount, emailRef, passwordRef,
 	}), [user, emailRef, passwordRef]);
 
 	return (

@@ -6,13 +6,13 @@ import StyledLoginPage, { StyledLabel, StyledSpan } from './styles';
 import AppContext from '../../contexts/AppProvider/AppContext';
 
 export default function CreateAccount() {
-	const { createAccount } = useContext(AppContext);
+	const { registerAccount } = useContext(AppContext);
 
 	return (
 		<StyledLoginPage>
 			<Main>
 				<h1>Página de cadastro</h1>
-				<Form submitFunc={createAccount}>
+				<Form submitFunc={registerAccount}>
 					<StyledSpan>Create account</StyledSpan>
 					<StyledLabel>
 						Email

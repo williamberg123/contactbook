@@ -7,7 +7,6 @@ import CreateAccount from './pages/CreateAccount';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import NewContact from './pages/NewContact';
-import Profile from './pages/Profile';
 
 export default function AppRoutes() {
 	const { user } = useContext(AppContext);
@@ -35,15 +34,6 @@ export default function AppRoutes() {
 				element={(
 					<PrivateRoute isAuth={ !!user }>
 						<NewContact />
-					</PrivateRoute>
-				)}
-			/>
-
-			<Route
-				path="/profile"
-				element={(
-					<PrivateRoute isAuth={ !!user }>
-						<Profile />
 					</PrivateRoute>
 				)}
 			/>

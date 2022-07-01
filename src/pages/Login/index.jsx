@@ -4,6 +4,7 @@ import Input from '../../components/Input';
 import Form from '../../containers/Form';
 import StyledLoginPage, { StyledLabel, StyledSpan } from './styles';
 import AppContext from '../../contexts/AppProvider/AppContext';
+import SubmitButton from '../../components/SubmitButton';
 
 export default function Login() {
 	const { signIn, emailRef, passwordRef } = useContext(AppContext);
@@ -23,7 +24,7 @@ export default function Login() {
 						<Input elementRef={passwordRef} type="password" placeholder="digite sua senha" />
 					</StyledLabel>
 
-					<Input type="submit">Entrar</Input>
+					<SubmitButton>Entrar</SubmitButton>
 				</Form>
 			</Main>
 		</StyledLoginPage>

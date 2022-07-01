@@ -14,21 +14,6 @@ const StyledLoginPage = styled.div`
 		margin-bottom: 20px;
 		color: #00bc5e;
 	}
-
-	& input[type="submit"] {
-		background-color: #00bc5e;
-		border: none;
-		border-radius: 5px;
-		color: white;
-		font-weight: bold;
-		padding: 15px;
-		font-size: 1rem;
-	}
-
-	& input[type="submit"]:hover {
-		background-color: #4aef9d;
-		transition: 0.3s;
-	}
 `;
 
 export const StyledLabel = styled.label`

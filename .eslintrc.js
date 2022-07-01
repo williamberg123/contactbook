@@ -38,5 +38,6 @@ module.exports = {
 		'no-alert': 'off',
 		'react/jsx-indent-props': 'off',
 		'template-curly-spacing': 'off',
+		'consistent-return': 'off',
 	},
 };

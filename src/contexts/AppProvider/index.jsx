@@ -1,23 +1,25 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { useCallback, useMemo, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import emailValidator from 'email-validator';
-import firebaseApp from '../../data/Firebase';
+import { auth } from '../../data/Firebase';
 
 import AppContext from './AppContext';
 import reducer from './reducer';
 import buildActions from './buildActions';
+import createAccount from '../../utils/createAccount';
 
 export default function AppProvider({ children }) {
-	const [user, userDispatch] = useReducer(reducer, null);
+	const [user, userDispatch] = useReducer(reducer, null, () => {
+		const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+		return loggedInUser;
+	});
 	const userActions = useCallback(buildActions(userDispatch), []);
 
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
-
-	const auth = getAuth(firebaseApp);
 
 	const signIn = useCallback(async (e) => {
 		e.preventDefault();
@@ -37,18 +39,9 @@ export default function AppProvider({ children }) {
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
-				const createdUser = userCredential.user;
-
-				const { metadata, phoneNumber, accessToken } = createdUser;
-				const userEmail = createdUser.email;
-
-				const loggedInUser = {
-					userEmail, metadata, phoneNumber, accessToken,
-				};
+				const loggedInUser = userCredential.user;
 
 				userActions.login(loggedInUser);
-
-				localStorage.setItem('loggedInUserWithFirebase', JSON.stringify(loggedInUser));
 				window.location.href = '/';
 			})
 			.catch(() => {
@@ -59,50 +52,15 @@ export default function AppProvider({ children }) {
 	const registerAccount = useCallback(async (e) => {
 		e.preventDefault();
 
-		if (!emailValidator.validate(emailRef.current.value)) {
-			alert('Digite um email válido');
-			return;
-		}
+		createAccount(emailRef, passwordRef, userActions);
+	}, [emailRef, passwordRef]);
 
-		if (passwordRef.current.value.length < 6 || passwordRef.current.value.length > 50) {
-			alert('Senha deve ter de 6 a 50 caracteres');
-			return;
-		}
-
-		const email = emailRef.current.value;
-		const password = passwordRef.current.value;
-
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				const createdUser = userCredential.user;
-
-				const { metadata, phoneNumber, accessToken } = createdUser;
-				const userEmail = createdUser.email;
-
-				const loggedInUser = {
-					userEmail, metadata, phoneNumber, accessToken,
-				};
-
-				userActions.login(loggedInUser);
-
-				localStorage.setItem('loggedInUserWithFirebase', JSON.stringify(loggedInUser));
-				window.location.href = '/';
-			})
-			.catch(() => {
-				alert('Não foi possível criar sua conta');
-			});
-	}, []);
-
-	useEffect(() => {
-		const loggedInUser = JSON.parse(localStorage.getItem('loggedInUserWithFirebase'));
-
-		if (loggedInUser) {
-			userActions.login(loggedInUser);
-		}
+	const createNewContact = useCallback((e) => {
+		e.preventDefault();
 	}, []);
 
 	const memoizedContext = useMemo(() => ({
-		user, userActions, signIn, registerAccount, emailRef, passwordRef,
+		user, userActions, signIn, registerAccount, createNewContact, emailRef, passwordRef,
 	}), [user, emailRef, passwordRef]);
 
 	return (

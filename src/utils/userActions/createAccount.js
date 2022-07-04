@@ -1,11 +1,10 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import emailValidator from 'email-validator';
 
-import { auth } from '../data/Firebase';
+import { firebaseAuth } from '../../data/Firebase';
+// import addNewUser from '../dbActions/addNewUser';
 
-const createAccount = (props) => {
-	const { emailRef, passwordRef, userActions } = props;
-
+const createAccount = async (emailRef, passwordRef, userActions) => {
 	if (!emailValidator.validate(emailRef.current.value)) {
 		alert('Digite um email válido');
 		return;
@@ -17,18 +16,15 @@ const createAccount = (props) => {
 	const email = emailRef.current.value;
 	const password = passwordRef.current.value;
 
-	createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			const createdUser = userCredential.user;
+	createUserWithEmailAndPassword(firebaseAuth, email, password)
+		.then((userCredentials) => {
+			console.log(userCredentials.user);
 
-			userActions.login(createdUser);
-
-			localStorage.setItem('loggedInUser', JSON.stringify(createdUser));
+			userActions.login(userCredentials.user);
+			localStorage.setItem('loggedInUser', JSON.stringify(userCredentials.user));
 			window.location.href = '/';
 		})
-		.catch(() => {
-			alert('Não foi possível criar sua conta');
-		});
+		.catch();
 };
 
 export default createAccount;

@@ -1,11 +1,13 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import AppContext from '../../contexts/AppProvider/AppContext';
+
 import RenderIf from '../RenderIf';
+
+import AppContext from '../../contexts/AppProvider/AppContext';
 import StyledHeader from './styles';
 
 export default function Header() {
-	const { user } = useContext(AppContext);
+	const { user, logout, deleteUser } = useContext(AppContext);
 
 	return (
 		<StyledHeader>
@@ -22,8 +24,10 @@ export default function Header() {
 						<div className="user-first-letter">{user?.email[0].toUpperCase()}</div>
 						<div className="hidden-menu">
 							<div className="triangle" />
-							<div className="account-actions">excluir conta</div>
-							<div className="account-actions">sair</div>
+							{/* eslint-disable-next-line */}
+							<div onClick={deleteUser} className="account-actions">excluir conta</div>
+							{/* eslint-disable-next-line */}
+							<div onClick={logout} className="account-actions">sair</div>
 						</div>
 					</div>
 				</RenderIf>

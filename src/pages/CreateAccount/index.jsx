@@ -1,31 +1,52 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+
 import Main from '../../containers/Main';
 import Input from '../../components/Input';
 import Form from '../../containers/Form';
-import StyledLoginPage, { StyledLabel, StyledSpan } from './styles';
+import LoginWithGoogle from '../../components/LoginWithGoogle';
+
 import AppContext from '../../contexts/AppProvider/AppContext';
+import StyledLoginPage, { StyledLabel, StyledSpan } from './styles';
 
 export default function CreateAccount() {
-	const { registerAccount } = useContext(AppContext);
+	const { registerAccount, signInWithGoogle } = useContext(AppContext);
+
+	const emailRef = useRef(null);
+	const passwordRef = useRef(null);
+	const phoneNumberRef = useRef(null);
 
 	return (
 		<StyledLoginPage>
 			<Main>
 				<h1>Página de cadastro</h1>
-				<Form submitFunc={registerAccount}>
+				<Form submitFunc={
+						(e) => registerAccount(
+							e,
+							emailRef.current.value,
+							passwordRef.current.value,
+							phoneNumberRef.current.value,
+						)
+					}
+				>
 					<StyledSpan>Create account</StyledSpan>
 					<StyledLabel>
 						Email
-						<Input type="email" placeholder="digite seu email" />
+						<Input elementRef={emailRef} type="email" placeholder="digite seu email" />
 					</StyledLabel>
 					<StyledLabel>
 						Password
-						<Input type="password" placeholder="digite sua senha" />
+						<Input elementRef={passwordRef} type="password" placeholder="digite sua senha" />
 					</StyledLabel>
 					<StyledLabel>
 						Phone
-						<Input type="tel" placeholder="digite um número de telefone" />
+						<Input elementRef={phoneNumberRef} type="tel" placeholder="digite um número de telefone" />
 					</StyledLabel>
+
+					<LoginWithGoogle buttonFunc={signInWithGoogle}>
+						Entrar com o Google
+						<FcGoogle />
+					</LoginWithGoogle>
 
 					<Input type="submit">Entrar</Input>
 				</Form>

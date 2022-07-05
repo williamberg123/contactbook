@@ -39,5 +39,6 @@ module.exports = {
 		'react/jsx-indent-props': 'off',
 		'template-curly-spacing': 'off',
 		'consistent-return': 'off',
+		'max-len': 'off',
 	},
 };

@@ -1,18 +1,7 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
-import AppContext from '../../contexts/AppProvider/AppContext';
 import StyledInput from './styles';
 
-export default function Input({ type, placeholder }) {
-	const { emailRef, passwordRef } = useContext(AppContext);
-	const elementRef = type === 'email'
-	? emailRef
-	: (
-		type === 'password'
-		? passwordRef
-		: null
-	);
-
+export default function Input({ type, placeholder, elementRef }) {
 	return (
 		<StyledInput ref={elementRef} type={type} placeholder={placeholder} />
 	);
@@ -21,4 +10,5 @@ export default function Input({ type, placeholder }) {
 Input.propTypes = {
 	type: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
+	elementRef: PropTypes.instanceOf(Object),
 };

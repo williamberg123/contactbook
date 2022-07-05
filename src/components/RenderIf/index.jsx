@@ -5,6 +5,6 @@ export default function RenderIf({ children, isTrue }) {
 }
 
 RenderIf.propTypes = {
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 	isTrue: PropTypes.bool.isRequired,
 };

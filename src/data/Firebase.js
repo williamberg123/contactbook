@@ -23,7 +23,7 @@ const appCheck = initializeAppCheck(firebaseApp, {
 	provider: new ReCaptchaV3Provider('6LdhxL4gAAAAAI3Rn5Zuwx7z3swe_e7RN6vdon24'),
 	isTokenAutoRefreshEnabled: true,
 });
+
 // eslint-disable-next-line
 export const firebaseAuth = getAuth(firebaseApp);
-console.log(firebaseAuth);
 export const db = getFirestore(firebaseApp);

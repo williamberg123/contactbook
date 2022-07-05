@@ -21,7 +21,12 @@ export default function AppRoutes() {
 
 			<Route
 				path="/login"
-				element={ <Login /> }
+				element={(
+					<PrivateRoute isAuth={ !user }>
+						<Login />
+					</PrivateRoute>
+				)}
+
 			/>
 
 			<Route

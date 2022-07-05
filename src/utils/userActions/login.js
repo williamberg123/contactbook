@@ -1,9 +1,9 @@
-import { signInWithEmailAndPassword, linkWithRedirect, FacebookAuthProvider } from 'firebase/auth';
+import { signInWithEmailAndPassword, linkWithCredential } from 'firebase/auth';
 import emailValidator from 'email-validator';
 
 import { firebaseAuth } from '../../data/Firebase';
 
-const accountLogin = async (emailRef, passwordRef, userActions) => {
+const accountLogin = async (emailRef, passwordRef) => {
 	if (!emailValidator.validate(emailRef.current.value)) {
 		alert('Digite um email válido');
 		return;
@@ -19,11 +19,7 @@ const accountLogin = async (emailRef, passwordRef, userActions) => {
 
 	const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
 
-	const provider = new FacebookAuthProvider();
-	await linkWithRedirect(userCredential.user, provider);
-
-	userActions.login(userCredential.user);
-	window.location.href = '/';
+	await linkWithCredential(userCredential.user, firebaseAuth);
 };
 
 export default accountLogin;

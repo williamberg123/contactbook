@@ -11,6 +11,7 @@ import accountLogin from '../../utils/userActions/loginWithEmailAndPassword';
 import deleteAccount from '../../utils/userActions/deleteAccount';
 import { firebaseAuth } from '../../data/Firebase';
 import addNewContact from '../../utils/dbActions/addNewContact';
+import saveEditedContact from '../../utils/dbActions/editContact';
 
 export default function AppProvider({ children }) {
 	const [user, userDispatch] = useReducer(reducer, null);
@@ -55,6 +56,15 @@ export default function AppProvider({ children }) {
 		await addNewContact(user.uid, { ...contactInfo });
 	}, [user]);
 
+	const editContact = useCallback(async (e, firstName, lastName, email, phoneNuber) => {
+		if (!user) {
+			window.location.href = '/';
+			return;
+		}
+
+		saveEditedContact(firstName, lastName, email, phoneNuber);
+	});
+
 	const deleteUser = useCallback(async () => {
 		const response = prompt('Deseja realmente excluir sua conta? Se sim, digite "sim" e clique em ok.');
 
@@ -71,8 +81,8 @@ export default function AppProvider({ children }) {
 	}, [firebaseAuth]);
 
 	const memoizedContext = useMemo(() => ({
-		user, userActions, signInWithEmailAndPassword, signInWithGoogle, registerAccount, createNewContact, logout,
-		deleteUser,
+		user, userActions, signInWithEmailAndPassword, signInWithGoogle, registerAccount, createNewContact, editContact,
+		logout, deleteUser,
 	}), [user]);
 
 	return (

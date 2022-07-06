@@ -19,6 +19,15 @@ const StyledListItem = styled.div`
 	& a:last-child {
 		background-color: red;
 	}
+
+	@media (max-width: 650px) {
+		padding: 20px 0;
+		font-size: 0.7rem;
+
+		& a {
+			padding: 5px;
+		}
+	}
 `;
 
 export default StyledListItem;

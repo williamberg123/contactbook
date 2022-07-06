@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import AppContext from './contexts/AppProvider/AppContext';
 import CreateAccount from './pages/CreateAccount';
+import EditContact from './pages/EditContact';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -31,7 +32,11 @@ export default function AppRoutes() {
 
 			<Route
 				path="/createaccount"
-				element={ <CreateAccount /> }
+				element={(
+					<PrivateRoute isAuth={ !user }>
+						<CreateAccount />
+					</PrivateRoute>
+	)}
 			/>
 
 			<Route
@@ -39,6 +44,15 @@ export default function AppRoutes() {
 				element={(
 					<PrivateRoute isAuth={ !!user }>
 						<NewContact />
+					</PrivateRoute>
+				)}
+			/>
+
+			<Route
+				path="/editcontact"
+				element={(
+					<PrivateRoute isAuth={ !!user }>
+						<EditContact />
 					</PrivateRoute>
 				)}
 			/>

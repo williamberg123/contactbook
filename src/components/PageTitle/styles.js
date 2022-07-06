@@ -17,6 +17,16 @@ const StyledPageTitle = styled.div`
 		font-size: 1.7rem;
 		color: #a3a3a3;
 	}
+
+	@media (max-width: 600px) {
+		& h1 {
+			font-size: 1.7rem;
+		}
+
+		& p {
+			font-size: 1.3rem;
+		}
+	}
 `;
 
 export default StyledPageTitle;

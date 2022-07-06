@@ -30,8 +30,12 @@ export default function AppProvider({ children }) {
 			return;
 		}
 
-		const googleProvider = new GoogleAuthProvider();
-		await signInWithRedirect(firebaseAuth, googleProvider);
+		try {
+			const googleProvider = new GoogleAuthProvider();
+			await signInWithRedirect(firebaseAuth, googleProvider);
+		} catch (error) {
+			alert('Ops, algo deu errado');
+		}
 	}, []);
 
 	const registerAccount = useCallback(async (e, email, password) => {
@@ -57,15 +61,22 @@ export default function AppProvider({ children }) {
 	}, [user]);
 
 	const editContact = useCallback(async (e, firstName, lastName, email, phoneNuber) => {
+		e.preventDefault();
+
 		if (!user) {
 			window.location.href = '/';
 			return;
 		}
 
-		saveEditedContact(firstName, lastName, email, phoneNuber);
-	});
+		await saveEditedContact(firstName, lastName, email, phoneNuber);
+	}, []);
 
 	const deleteUser = useCallback(async () => {
+		if (!firebaseAuth.currentUser) {
+			window.location.href = '/';
+			return;
+		}
+
 		const response = prompt('Deseja realmente excluir sua conta? Se sim, digite "sim" e clique em ok.');
 
 		if (response.toLowerCase() === 'sim') {

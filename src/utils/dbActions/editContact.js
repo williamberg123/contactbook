@@ -1,4 +1,4 @@
-const saveEditedContact = async () => {
+const saveEditedContact = async (firstName, lastName, email, phoneNuber) => {
 
 };
 

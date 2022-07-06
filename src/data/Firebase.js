@@ -20,7 +20,7 @@ self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 // eslint-disable-next-line
 const appCheck = initializeAppCheck(firebaseApp, {
-	provider: new ReCaptchaV3Provider('6LdhxL4gAAAAAI3Rn5Zuwx7z3swe_e7RN6vdon24'),
+	provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_PUBLICKEY),
 	isTokenAutoRefreshEnabled: true,
 });
 

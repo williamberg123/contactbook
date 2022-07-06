@@ -1,10 +1,10 @@
 import { deleteUser } from 'firebase/auth';
-import { deleteDoc } from 'firebase/firestore';
+import { firebaseAuth } from '../../data/Firebase';
 
 const deleteAccount = async (user, userActions) => {
 	try {
-		await deleteUser(user);
-		await deleteDoc({ uid: user.uid });
+		await deleteUser(firebaseAuth.currentUser);
+		// await deleteDoc(collection(db, 'users'), where('uid', '==', user.uid));
 
 		userActions.logout();
 

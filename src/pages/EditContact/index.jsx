@@ -1,16 +1,19 @@
-import { useContext, useEffect, useRef } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
 import { useSearchParams } from 'react-router-dom';
 
 import Form from '../../containers/Form';
 import Input from '../../components/Input';
+import Main from '../../containers/Main';
 
-import StyledEditContact, { StyledLabel, StyledSpan } from './styles';
+import AppContext from '../../contexts/AppProvider/AppContext';
 import SubmitButton from '../../components/SubmitButton';
 import { db } from '../../data/Firebase';
-import AppContext from '../../contexts/AppProvider/AppContext';
+
+import StyledEditContact, { StyledLabel, StyledSpan } from './styles';
 
 export default function EditContact() {
+	const [ isDisabled, setIsDisabled ] = useState(true);
 	const { editContact } = useContext(AppContext);
 
 	const firstNameRef = useRef(null);
@@ -21,21 +24,19 @@ export default function EditContact() {
 	const [ searcParams ] = useSearchParams();
 
 	const getContactInfo = async () => {
-		const configQuery = query(collection(db, 'contacts'), where('contactInfo.email', '==', searcParams.get('id')));
+		const documentRef = doc(db, 'contacts', searcParams.get('id'));
 
-		const contactQuery = await getDocs(configQuery);
-		let contact = null;
+		const contactQuery = await getDoc(documentRef);
+		const contactData = contactQuery.data();
 
-		contactQuery.forEach((doc) => {
-			contact = doc.data();
-		});
-
-		const { firstName, lastName, email, phoneNumber } = contact.contactInfo;
+		const { firstName, lastName, email, phoneNumber } = contactData.contactInfo;
 
 		firstNameRef.current.value = firstName;
 		lastNameRef.current.value = lastName;
 		emailRef.current.value = email;
 		phoneNumberRef.current.value = phoneNumber;
+
+		setIsDisabled(false);
 	};
 
 	useEffect(() => {
@@ -45,30 +46,40 @@ export default function EditContact() {
 	return (
 		<StyledEditContact>
 			<h1>Página editar contato</h1>
-			<Form submitFunc={(e) => editContact(e)}>
-				<StyledSpan>Edit Contact</StyledSpan>
-				<StyledLabel>
-					Primeiro nome
-					<Input type="text" elementRef={firstNameRef} placeholder="edite o primeiro nome" />
-				</StyledLabel>
+			<Main>
+				<Form submitFunc={
+					(e) => editContact(e, {
+						firstName: firstNameRef.current.value,
+						lastName: lastNameRef.current.value,
+						email: emailRef.current.value,
+						phoneNumber: phoneNumberRef.current.value,
+					}, searcParams.get('id'))
+				}
+				>
+					<StyledSpan>Edit Contact</StyledSpan>
+					<StyledLabel>
+						Primeiro nome
+						<Input type="text" elementRef={firstNameRef} placeholder="edite o primeiro nome" />
+					</StyledLabel>
 
-				<StyledLabel>
-					Último nome
-					<Input type="text" elementRef={lastNameRef} placeholder="edite o último nome" />
-				</StyledLabel>
+					<StyledLabel>
+						Último nome
+						<Input type="text" elementRef={lastNameRef} placeholder="edite o último nome" />
+					</StyledLabel>
 
-				<StyledLabel>
-					Email do contato
-					<Input type="email" elementRef={emailRef} placeholder="edite o email do contato" />
-				</StyledLabel>
+					<StyledLabel>
+						Email do contato
+						<Input type="email" elementRef={emailRef} placeholder="edite o email do contato" />
+					</StyledLabel>
 
-				<StyledLabel>
-					Telefone do contato
-					<Input type="text" elementRef={phoneNumberRef} placeholder="edite o telefone do contato" />
-				</StyledLabel>
+					<StyledLabel>
+						Telefone do contato
+						<Input type="text" elementRef={phoneNumberRef} placeholder="edite o telefone do contato" />
+					</StyledLabel>
 
-				<SubmitButton>Salvar alterações</SubmitButton>
-			</Form>
+					<SubmitButton disabled={isDisabled}>Salvar alterações</SubmitButton>
+				</Form>
+			</Main>
 		</StyledEditContact>
 	);
 }

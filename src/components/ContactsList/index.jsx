@@ -22,7 +22,13 @@ export default function ContactsList() {
 
 		const contactsList = [];
 
-		userContacts.forEach((doc) => contactsList.push({ ...doc.data() }));
+		userContacts.forEach((doc) => {
+			const contactInfo = doc.data();
+			contactsList.push({
+				docRef: doc.id,
+				...contactInfo,
+			});
+		});
 
 		setContacts(contactsList);
 	};

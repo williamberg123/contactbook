@@ -12,6 +12,7 @@ import deleteAccount from '../../utils/userActions/deleteAccount';
 import { firebaseAuth } from '../../data/Firebase';
 import addNewContact from '../../utils/dbActions/addNewContact';
 import saveEditedContact from '../../utils/dbActions/editContact';
+import deleteOneContact from '../../utils/dbActions/deleteOneContact';
 
 export default function AppProvider({ children }) {
 	const [user, userDispatch] = useReducer(reducer, null);
@@ -60,15 +61,15 @@ export default function AppProvider({ children }) {
 		await addNewContact(user.uid, { ...contactInfo });
 	}, [user]);
 
-	const editContact = useCallback(async (e, firstName, lastName, email, phoneNuber) => {
+	const editContact = useCallback(async (e, contactInfo, docRef) => {
 		e.preventDefault();
 
-		if (!user) {
+		if (!firebaseAuth.currentUser) {
 			window.location.href = '/';
 			return;
 		}
 
-		await saveEditedContact(firstName, lastName, email, phoneNuber);
+		await saveEditedContact(contactInfo, docRef);
 	}, []);
 
 	const deleteUser = useCallback(async () => {
@@ -84,6 +85,12 @@ export default function AppProvider({ children }) {
 		}
 	}, []);
 
+	const deleteContact = useCallback(async (e, docRef) => {
+		e.preventDefault();
+
+		await deleteOneContact(docRef);
+	}, []);
+
 	useEffect(() => {
 		onAuthStateChanged(firebaseAuth, (userInfo) => {
 			if (!userInfo) return;
@@ -93,7 +100,7 @@ export default function AppProvider({ children }) {
 
 	const memoizedContext = useMemo(() => ({
 		user, userActions, signInWithEmailAndPassword, signInWithGoogle, registerAccount, createNewContact, editContact,
-		logout, deleteUser,
+		logout, deleteUser, deleteContact,
 	}), [user]);
 
 	return (

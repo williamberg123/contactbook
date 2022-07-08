@@ -35,6 +35,7 @@ export const StyledLabel = styled.label`
 	display: flex;
 	flex-direction: column;
 	margin: 10px 0;
+	text-align: center;
 
 	& input {
 		margin: 10px 0;

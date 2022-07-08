@@ -1,12 +1,11 @@
 import { deleteUser } from 'firebase/auth';
 import { firebaseAuth } from '../../data/Firebase';
 
-const deleteAccount = async (user, userActions) => {
+const deleteAccount = async () => {
 	try {
 		await deleteUser(firebaseAuth.currentUser);
-		// await deleteDoc(collection(db, 'users'), where('uid', '==', user.uid));
 
-		userActions.logout();
+		// await deleteDoc(collection(db, 'users'), where('uid', '==', user.uid));
 
 		alert('Usuário excluído com sucesso');
 	} catch (error) {

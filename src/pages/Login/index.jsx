@@ -1,10 +1,9 @@
 import { useContext, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { Link } from 'react-router-dom';
 
 import Main from '../../containers/Main';
-import Input from '../../components/Input';
 import Form from '../../containers/Form';
-import SubmitButton from '../../components/SubmitButton';
 import LoginWithGoogle from '../../components/LoginWithGoogle';
 
 import AppContext from '../../contexts/AppProvider/AppContext';
@@ -23,20 +22,18 @@ export default function Login() {
 				<Form submitFunc={(e) => signInWithEmailAndPassword(e, emailRef.current.value, passwordRef.current.value)}>
 					<StyledSpan>Login</StyledSpan>
 					<StyledLabel>
-						Email
-						<Input elementRef={emailRef} type="email" placeholder="digite seu email" />
+						Acesse sua conta clicando no botão logo abaixo
 					</StyledLabel>
 					<StyledLabel>
-						Password
-						<Input elementRef={passwordRef} type="password" placeholder="digite sua senha" />
+						Caso não tenha uma conta, crie uma acessando este link
 					</StyledLabel>
+
+					<Link to="/createaccount">não tem uma conta? Crie uma clicando aqui</Link>
 
 					<LoginWithGoogle buttonFunc={signInWithGoogle}>
 						Entrar com o Google
 						<FcGoogle />
 					</LoginWithGoogle>
-
-					<SubmitButton>Entrar</SubmitButton>
 				</Form>
 			</Main>
 		</StyledLoginPage>

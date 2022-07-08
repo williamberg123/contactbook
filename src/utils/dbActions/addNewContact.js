@@ -14,7 +14,7 @@ const addNewContact = async (uid, contactData) => {
 		},
 	});
 
-	window.location.href = '/';
+	window.location.replace('/');
 };
 
 export default addNewContact;

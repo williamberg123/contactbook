@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import PrivateRoute from './components/PrivateRoute';
 import AppContext from './contexts/AppProvider/AppContext';
 import CreateAccount from './pages/CreateAccount';

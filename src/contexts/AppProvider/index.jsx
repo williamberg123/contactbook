@@ -6,8 +6,6 @@ import AppContext from './AppContext';
 import reducer from './reducer';
 import buildActions from './buildActions';
 
-import createAccount from '../../utils/userActions/createAccount';
-import accountLogin from '../../utils/userActions/loginWithEmailAndPassword';
 import deleteAccount from '../../utils/userActions/deleteAccount';
 import { firebaseAuth } from '../../data/Firebase';
 import addNewContact from '../../utils/dbActions/addNewContact';
@@ -18,12 +16,6 @@ export default function AppProvider({ children }) {
 	const [user, userDispatch] = useReducer(reducer, null);
 
 	const userActions = useCallback(buildActions(userDispatch), []);
-
-	const signInWithEmailAndPassword = useCallback(async (e, email, password) => {
-		e.preventDefault();
-
-		await accountLogin(email, password);
-	}, []);
 
 	const signInWithGoogle = useCallback(async () => {
 		if (user) {
@@ -37,12 +29,6 @@ export default function AppProvider({ children }) {
 		} catch (error) {
 			alert('Ops, algo deu errado');
 		}
-	}, []);
-
-	const registerAccount = useCallback(async (e, email, password) => {
-		e.preventDefault();
-
-		await createAccount(email, password);
 	}, []);
 
 	const logout = useCallback(() => {
@@ -99,7 +85,7 @@ export default function AppProvider({ children }) {
 	}, [firebaseAuth]);
 
 	const memoizedContext = useMemo(() => ({
-		user, userActions, signInWithEmailAndPassword, signInWithGoogle, registerAccount, createNewContact, editContact,
+		user, userActions, signInWithGoogle, createNewContact, editContact,
 		logout, deleteUser, deleteContact,
 	}), [user]);
 

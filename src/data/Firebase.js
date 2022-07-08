@@ -16,7 +16,7 @@ const firebaseConfig = {
 export const firebaseApp = initializeApp(firebaseConfig);
 
 // eslint-disable-next-line
-// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 // eslint-disable-next-line
 const appCheck = initializeAppCheck(firebaseApp, {

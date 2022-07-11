@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import AppContext from '../../contexts/AppProvider/AppContext';
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.header`
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -19,6 +19,12 @@ const StyledHeader = styled.div`
 			padding: ${ user ? '20px' : '30px 20px' };
 		`;
 	}}
+
+	& img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
 
 	& .links-div {
 		display: flex;

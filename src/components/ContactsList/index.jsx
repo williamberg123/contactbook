@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-
 import Loader from 'react-js-loader';
+import { RiContactsFill } from 'react-icons/ri';
+
 import RenderIf from '../RenderIf';
+import ListItem from '../ListItem';
+
 import AppContext from '../../contexts/AppProvider/AppContext';
+import { db } from '../../data/Firebase';
 
 import StyledContactsList from './styles';
-import { db } from '../../data/Firebase';
-import ListItem from '../ListItem';
 
 export default function ContactsList() {
 	const [ contacts, setContacts ] = useState(null);
+	const [ isLoading, setIsLoading ] = useState(true);
 
 	const { user } = useContext(AppContext);
 
@@ -31,6 +34,7 @@ export default function ContactsList() {
 		});
 
 		setContacts(contactsList);
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -39,14 +43,19 @@ export default function ContactsList() {
 
 	return (
 		<StyledContactsList>
-			<RenderIf isTrue={ !contacts }>
-				<Loader type="spinner-default" bgColor="#000000" size={70} />
+			<RenderIf isTrue={ isLoading }>
+				<Loader type="spinner-default" bgColor="#000000" size={50} />
 			</RenderIf>
 
-			<RenderIf isTrue={ !!contacts }>
+			<RenderIf isTrue={ !!contacts?.length && !isLoading }>
 				{
 					contacts?.map((contact, index) => <ListItem key={`contact-${index}`} {...contact} />)
 				}
+			</RenderIf>
+
+			<RenderIf isTrue={ !contacts?.length && !isLoading }>
+				<RiContactsFill />
+				<span>Sem contatos</span>
 			</RenderIf>
 		</StyledContactsList>
 	);

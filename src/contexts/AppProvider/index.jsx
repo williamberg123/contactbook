@@ -6,14 +6,17 @@ import AppContext from './AppContext';
 import reducer from './reducer';
 import buildActions from './buildActions';
 
-import deleteAccount from '../../utils/userActions/deleteAccount';
+import deleteAccount from '../../utils/dbActions/deleteUser';
 import { firebaseAuth } from '../../data/Firebase';
 import addNewContact from '../../utils/dbActions/addNewContact';
 import saveEditedContact from '../../utils/dbActions/editContact';
 import deleteOneContact from '../../utils/dbActions/deleteOneContact';
 
 export default function AppProvider({ children }) {
-	const [user, userDispatch] = useReducer(reducer, null);
+	const [user, userDispatch] = useReducer(reducer, null, () => {
+		const loggedInUser = JSON.parse(sessionStorage.getItem('loggedin_user'));
+		return loggedInUser;
+	});
 
 	const userActions = useCallback(buildActions(userDispatch), []);
 
@@ -29,7 +32,7 @@ export default function AppProvider({ children }) {
 		} catch (error) {
 			alert('Ops, algo deu errado');
 		}
-	}, []);
+	}, [user]);
 
 	const logout = useCallback(() => {
 		userActions.logout();
@@ -56,10 +59,10 @@ export default function AppProvider({ children }) {
 		}
 
 		await saveEditedContact(contactInfo, docRef);
-	}, []);
+	}, [firebaseAuth]);
 
 	const deleteUser = useCallback(async () => {
-		if (!firebaseAuth.currentUser) {
+		if (!user) {
 			window.location.href = '/';
 			return;
 		}
@@ -67,9 +70,10 @@ export default function AppProvider({ children }) {
 		const response = prompt('Deseja realmente excluir sua conta? Se sim, digite "sim" e clique em ok.');
 
 		if (response.toLowerCase() === 'sim') {
-			await deleteAccount(user, userActions);
+			await deleteAccount(firebaseAuth.currentUser);
+			userActions.logout();
 		}
-	}, []);
+	}, [firebaseAuth, user]);
 
 	const deleteContact = useCallback(async (e, docRef) => {
 		e.preventDefault();
@@ -80,9 +84,17 @@ export default function AppProvider({ children }) {
 	useEffect(() => {
 		onAuthStateChanged(firebaseAuth, (userInfo) => {
 			if (!userInfo) return;
-			userActions.verifyLoggedInUser(userInfo);
+			userActions.login(userInfo);
 		});
 	}, [firebaseAuth]);
+
+	useEffect(() => {
+		window.addEventListener('unload', logout);
+
+		return () => {
+			window.removeEventListener('unload', logout);
+		};
+	}, []);
 
 	const memoizedContext = useMemo(() => ({
 		user, userActions, signInWithGoogle, createNewContact, editContact,

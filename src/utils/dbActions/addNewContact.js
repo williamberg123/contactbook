@@ -1,16 +1,18 @@
-import { collection, addDoc } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../data/Firebase';
 
 const addNewContact = async (uid, contactData) => {
-	const contactsCollectionRef = collection(db, 'contacts');
+	const collectionRef = collection(db, 'contacts');
 
-	await addDoc(contactsCollectionRef, {
+	const { 0: firstName, 1: lastName, 2: email, 3: phoneNumber } = contactData;
+
+	await addDoc(collectionRef, {
 		uid,
 		contactInfo: {
-			firstName: contactData[0],
-			lastName: contactData[1],
-			email: contactData[2],
-			phoneNumber: contactData[3],
+			firstName,
+			lastName,
+			email,
+			phoneNumber,
 		},
 	});
 

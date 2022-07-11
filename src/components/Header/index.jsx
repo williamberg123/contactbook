@@ -5,6 +5,7 @@ import RenderIf from '../RenderIf';
 
 import AppContext from '../../contexts/AppProvider/AppContext';
 import StyledHeader from './styles';
+import Image from '../Image';
 
 export default function Header() {
 	const { user, logout, deleteUser } = useContext(AppContext);
@@ -21,7 +22,15 @@ export default function Header() {
 					<Link to="/newcontact">Criar contato</Link>
 					{/* <Link to="/logout">Sair</Link> */}
 					<div className="user-profile">
-						<div className="user-first-letter">{user?.email[0].toUpperCase()}</div>
+						<div className="user-first-letter">
+							<RenderIf isTrue={ !user?.photoURL }>
+								{user?.email[0].toUpperCase()}
+							</RenderIf>
+							<RenderIf isTrue={ !!user?.photoURL }>
+								<Image source={ user?.photoURL } />
+							</RenderIf>
+						</div>
+
 						<div className="hidden-menu">
 							<div className="triangle" />
 							{/* eslint-disable-next-line */}

@@ -1,13 +1,11 @@
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../data/Firebase';
 
-const saveEditedContact = async (contactInfo, docRef) => {
-	const documentRef = doc(db, 'contacts', docRef);
+const saveEditedContact = async (contactInfo, uid, docRef) => {
+	const documentRef = doc(db, 'contacts', uid, 'userContacts', docRef);
 
 	await setDoc(documentRef, {
-		contactInfo: {
-			...contactInfo,
-		},
+		...contactInfo,
 	}, { merge: true });
 
 	window.location.href = '/';

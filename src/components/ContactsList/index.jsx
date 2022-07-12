@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import Loader from 'react-js-loader';
 import { RiContactsFill } from 'react-icons/ri';
 
@@ -18,10 +18,9 @@ export default function ContactsList() {
 	const { user } = useContext(AppContext);
 
 	const getUserContacts = async () => {
-		const contactsCollectionRef = collection(db, 'contacts');
+		const collectionRef = collection(db, 'contacts', user.uid, 'userContacts');
 
-		const queryObject = query(contactsCollectionRef, where('uid', '==', user.uid));
-		const userContacts = await getDocs(queryObject);
+		const userContacts = await getDocs(collectionRef);
 
 		const contactsList = [];
 

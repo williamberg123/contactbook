@@ -9,7 +9,7 @@ import buildActions from './buildActions';
 import deleteAccount from '../../utils/dbActions/deleteUser';
 import { firebaseAuth } from '../../data/Firebase';
 import addNewContact from '../../utils/dbActions/addNewContact';
-import saveEditedContact from '../../utils/dbActions/editContact';
+import saveEditedContact from '../../utils/dbActions/saveEditedContact';
 import deleteOneContact from '../../utils/dbActions/deleteOneContact';
 
 export default function AppProvider({ children }) {
@@ -50,7 +50,7 @@ export default function AppProvider({ children }) {
 		await addNewContact(user.uid, { ...contactInfo });
 	}, [user]);
 
-	const editContact = useCallback(async (e, contactInfo, docRef) => {
+	const editContact = useCallback(async (e, contactInfo, uid, docRef) => {
 		e.preventDefault();
 
 		if (!firebaseAuth.currentUser) {
@@ -58,7 +58,7 @@ export default function AppProvider({ children }) {
 			return;
 		}
 
-		await saveEditedContact(contactInfo, docRef);
+		await saveEditedContact(contactInfo, uid, docRef);
 	}, [firebaseAuth]);
 
 	const deleteUser = useCallback(async () => {
@@ -75,10 +75,10 @@ export default function AppProvider({ children }) {
 		}
 	}, [firebaseAuth, user]);
 
-	const deleteContact = useCallback(async (e, docRef) => {
+	const deleteContact = useCallback(async (e, uid, docRef) => {
 		e.preventDefault();
 
-		await deleteOneContact(docRef);
+		await deleteOneContact(uid, docRef);
 	}, []);
 
 	useEffect(() => {

@@ -14,7 +14,7 @@ import StyledEditContact, { StyledLabel, StyledSpan } from './styles';
 
 export default function EditContact() {
 	const [ isDisabled, setIsDisabled ] = useState(true);
-	const { editContact } = useContext(AppContext);
+	const { editContact, user } = useContext(AppContext);
 
 	const firstNameRef = useRef(null);
 	const lastNameRef = useRef(null);
@@ -24,12 +24,12 @@ export default function EditContact() {
 	const [ searcParams ] = useSearchParams();
 
 	const getContactInfo = async () => {
-		const documentRef = doc(db, 'contacts', searcParams.get('id'));
+		const documentRef = doc(db, 'contacts', user.uid, 'userContacts', searcParams.get('id'));
 
 		const contactQuery = await getDoc(documentRef);
 		const contactData = contactQuery.data();
 
-		const { firstName, lastName, email, phoneNumber } = contactData.contactInfo;
+		const { firstName, lastName, email, phoneNumber } = contactData;
 
 		firstNameRef.current.value = firstName;
 		lastNameRef.current.value = lastName;
@@ -53,7 +53,7 @@ export default function EditContact() {
 						lastName: lastNameRef.current.value,
 						email: emailRef.current.value,
 						phoneNumber: phoneNumberRef.current.value,
-					}, searcParams.get('id'))
+					}, user.uid, searcParams.get('id'))
 				}
 				>
 					<StyledSpan>Edit Contact</StyledSpan>

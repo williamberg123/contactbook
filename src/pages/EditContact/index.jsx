@@ -24,7 +24,7 @@ export default function EditContact() {
 	const [ searcParams ] = useSearchParams();
 
 	const getContactInfo = async () => {
-		const documentRef = doc(db, 'contacts', user.uid, 'userContacts', searcParams.get('id'));
+		const documentRef = doc(db, 'users', user.uid, 'userContacts', searcParams.get('id'));
 
 		const contactQuery = await getDoc(documentRef);
 		const contactData = contactQuery.data();

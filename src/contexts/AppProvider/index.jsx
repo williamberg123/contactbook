@@ -70,7 +70,7 @@ export default function AppProvider({ children }) {
 		const response = prompt('Deseja realmente excluir sua conta? Se sim, digite "sim" e clique em ok.');
 
 		if (response.toLowerCase() === 'sim') {
-			await deleteAccount(firebaseAuth.currentUser);
+			await deleteAccount();
 			userActions.logout();
 		}
 	}, [firebaseAuth, user]);

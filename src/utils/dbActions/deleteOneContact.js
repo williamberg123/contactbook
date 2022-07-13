@@ -5,7 +5,7 @@ const deleteOneContact = async (uid, docRef) => {
 	const promptResult = prompt('Deseja excluir este contato? Se sim, digite "sim" e confirme.');
 
 	if (promptResult && promptResult.toLowerCase() === 'sim') {
-		const documentRef = doc(db, 'contacts', uid, 'userContacts', docRef);
+		const documentRef = doc(db, 'users', uid, 'userContacts', docRef);
 		await deleteDoc(documentRef);
 		window.location.href = '/';
 	}

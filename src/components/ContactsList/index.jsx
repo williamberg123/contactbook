@@ -18,7 +18,7 @@ export default function ContactsList() {
 	const { user } = useContext(AppContext);
 
 	const getUserContacts = async () => {
-		const collectionRef = collection(db, 'contacts', user.uid, 'userContacts');
+		const collectionRef = collection(db, 'users', user.uid, 'userContacts');
 
 		const userContacts = await getDocs(collectionRef);
 

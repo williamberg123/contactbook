@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "homepage": "https://contactbookwithusers.netlify.app/",
   "dependencies": {
     "email-validator": "^2.0.4",
     "firebase": "^9.8.4",

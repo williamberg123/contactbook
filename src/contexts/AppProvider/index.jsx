@@ -83,7 +83,10 @@ export default function AppProvider({ children }) {
 
 	useEffect(() => {
 		onAuthStateChanged(firebaseAuth, (userInfo) => {
-			if (!userInfo) return;
+			if (!userInfo) {
+				sessionStorage.removeItem('loggedin_user');
+				return;
+			}
 			userActions.login(userInfo);
 		});
 	}, [firebaseAuth]);

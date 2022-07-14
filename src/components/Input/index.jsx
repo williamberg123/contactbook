@@ -3,7 +3,7 @@ import StyledInput from './styles';
 
 export default function Input({ type, placeholder, elementRef }) {
 	return (
-		<StyledInput ref={elementRef} type={type} placeholder={placeholder} />
+		<StyledInput required ref={elementRef} type={type} placeholder={placeholder} />
 	);
 }
 

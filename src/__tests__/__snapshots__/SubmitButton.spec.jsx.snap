@@ -1,0 +1,28 @@
+// Vitest Snapshot v1
+
+exports[`<SubmitButton /> > should render SubmitButton with the text correctly 1`] = `
+.c0 {
+  background-color: #00bc5e;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  padding: 15px;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.c0:hover {
+  background-color: #4aef9d;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+<button
+  class="c0"
+  type="submit"
+>
+  Este é o botão de submit
+</button>
+`;

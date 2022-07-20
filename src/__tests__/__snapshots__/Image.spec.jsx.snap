@@ -1,0 +1,8 @@
+// Vitest Snapshot v1
+
+exports[`<Image /> > should match snapshot 1`] = `
+<img
+  class=""
+  src="img/img.png"
+/>
+`;

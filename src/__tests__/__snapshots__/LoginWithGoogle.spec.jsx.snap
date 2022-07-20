@@ -1,0 +1,42 @@
+// Vitest Snapshot v1
+
+exports[`<LoginWithGoogle /> > should match snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 15px;
+  cursor: pointer;
+  margin: 20px 0;
+  background-color: #e5e5e5;
+  color: #00bc5e;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+}
+
+.c0:hover {
+  background-color: #d8d8d8;
+}
+
+.c0 > svg {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+}
+
+<button
+  class="c0"
+>
+  Entrar com o google
+</button>
+`;

@@ -40,5 +40,8 @@ module.exports = {
 		'template-curly-spacing': 'off',
 		'consistent-return': 'off',
 		'max-len': 'off',
+		'import/no-extraneous-dependencies': 'off',
+		'react/jsx-no-constructed-context-values': 'off',
+		'react/function-component-definition': 'off',
 	},
 };

@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`<PrivateRoute /> > should match snapshot 1`] = `
+<h1>
+  Rota renderizada
+</h1>
+`;

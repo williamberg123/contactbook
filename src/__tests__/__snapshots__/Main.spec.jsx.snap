@@ -1,0 +1,23 @@
+// Vitest Snapshot v1
+
+exports[`<Main /> > should match snapshot 1`] = `
+.c0 {
+  padding: 20px;
+}
+
+<main
+  class="c0"
+>
+  <h1>
+    titulo
+  </h1>
+  <p>
+    paragrafo
+  </p>
+  <button
+    type="button"
+  >
+    botao
+  </button>
+</main>
+`;

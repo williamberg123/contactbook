@@ -6,8 +6,8 @@ import { RiContactsFill } from 'react-icons/ri';
 import RenderIf from '../RenderIf';
 import ListItem from '../ListItem';
 
-import AppContext from '../../contexts/AppProvider/AppContext';
 import { db } from '../../data/Firebase';
+import AppContext from '../../contexts/AppProvider/AppContext';
 
 import StyledContactsList from './styles';
 

@@ -30,7 +30,6 @@ export default function AppProvider({ children }) {
 			const googleProvider = new GoogleAuthProvider();
 			await signInWithRedirect(firebaseAuth, googleProvider);
 		} catch (error) {
-			console.log(error);
 			alert('Ops, algo deu errado');
 		}
 	}, [user]);

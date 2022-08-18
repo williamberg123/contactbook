@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
+import { Navigate } from 'react-router-dom';
 
 export default function PrivateRoute({ children, isAuth }) {
-	if (!isAuth) {
-		window.location.href = '/';
-	} else {
-		return children;
-	}
+	return isAuth ? children : <Navigate to="/" />;
 }
 
 PrivateRoute.propTypes = {
